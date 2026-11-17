@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>Panel Cuenta Maestro | TOTTUS ONLINE</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header admin-site-header">
+    <div class="container header-grid">
+      <div class="logo-box">
+        <a href="index.html">TOTTUS <span>PANEL MAESTRO</span></a>
+      </div>
+      <div class="admin-nav-actions">
+        <a href="index.html" class="btn-header-cart">VER TIENDA EN VIVO</a>
+        <button type="button" id="admin-logout-btn" class="btn-danger-square">CERRAR SESIÓN</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container admin-container">
+    <!-- Bloque 1: Promoción Global -->
+    <section class="square-panel mb-16">
+      <div class="panel-title-bar">
+        <h3>1. CONFIGURACIÓN DE CINTILLO PROMOCIONAL GLOBAL</h3>
+      </div>
+      <div class="panel-body inline-form">
+        <input type="text" id="admin-promo-input" placeholder="Escribe el anuncio promocional de la cabecera...">
+        <button type="button" id="save-promo-btn" class="btn-dark-square">GUARDAR PROMOCIÓN</button>
+      </div>
+    </section>
+
+    <!-- Bloque 2: Formulario de Producto -->
+    <section class="square-panel mb-16">
+      <div class="panel-title-bar">
+        <h3 id="form-section-title">2. AGREGAR NUEVO PRODUCTO AL CATÁLOGO</h3>
+      </div>
+      <form id="product-form" class="panel-body admin-form-grid">
+        <input type="hidden" id="edit-prod-id">
+
+        <div class="form-group">
+          <label>Nombre del Producto:</label>
+          <input type="text" id="prod-name" required placeholder="Ej. Aceite de Oliva Extra Virgen 500ml">
+        </div>
+        <div class="form-group">
+          <label>Marca:</label>
+          <input type="text" id="prod-brand" required placeholder="Ej. COSTEÑO">
+        </div>
+        <div class="form-group">
+          <label>Categoría:</label>
+          <select id="prod-category">
+            <option value="Abarrotes">Abarrotes</option>
+            <option value="Lacteos">Lácteos y Huevos</option>
+            <option value="Frescos">Carnes y Frescos</option>
+            <option value="Bebidas">Bebidas</option>
+            <option value="Limpieza">Limpieza</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ícono / Emoji:</label>
+          <input type="text" id="prod-emoji" value="📦" maxlength="4">
+        </div>
+        <div class="form-group">
+          <label>Precio Final / Oferta (S/):</label>
+          <input type="number" id="prod-price" step="0.10" min="0.10" required placeholder="14.90">
+        </div>
+        <div class="form-group">
+          <label>Precio Regular Tachado (Opcional):</label>
+          <input type="number" id="prod-old-price" step="0.10" min="0" placeholder="Dejar vacío si no es oferta">
+        </div>
+
+        <div class="form-actions-row">
+          <button type="submit" class="btn-primary-square">GUARDAR PRODUCTO</button>
+          <button type="button" id="cancel-edit-btn" class="btn-secondary-square hidden">CANCELAR EDICIÓN</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Bloque 3: Tabla de Inventario -->
+    <section class="square-panel">
+      <div class="panel-title-bar">
+        <h3>3. INVENTARIO Y GESTIÓN DE OFERTAS (<span id="total-admin-products">0</span>)</h3>
+      </div>
+      <div class="panel-body table-responsive">
+        <table class="classic-table">
+          <thead>
+            <tr>
+              <th>SKU</th>
+              <th>Producto</th>
+              <th>Marca</th>
+              <th>Categoría</th>
+              <th>Precio Normal</th>
+              <th>Precio Venta</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="admin-inventory-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script src="js/security.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

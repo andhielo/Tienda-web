@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <title>Pasarela de Pagos | TOTTUS ONLINE</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container header-grid">
+      <div class="logo-box">
+        <a href="index.html">TOTTUS <span>CAJA Y PAGOS</span></a>
+      </div>
+      <div>
+        <a href="index.html" class="btn-header-cart">&larr; SEGUIR COMPRANDO</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="container checkout-layout" id="checkout-main-container">
+    
+    <!-- COLUMNA IZQUIERDA: Detalle del Carrito + Datos de Entrega + Método de Pago -->
+    <div class="checkout-left">
+      
+      <!-- Paso 1: Revisión de Productos -->
+      <section class="square-panel mb-16">
+        <div class="panel-title-bar">
+          <h3>1. PRODUCTOS EN TU CARRITO</h3>
+        </div>
+        <div class="panel-body" id="checkout-cart-list"></div>
+      </section>
+
+      <!-- Paso 2: Datos de Despacho -->
+      <section class="square-panel mb-16">
+        <div class="panel-title-bar">
+          <h3>2. DATOS DE ENTREGA A DOMICILIO</h3>
+        </div>
+        <div class="panel-body checkout-form-grid">
+          <div class="form-group">
+            <label>Nombre del Destinatario:</label>
+            <input type="text" id="ship-name" required placeholder="Nombre completo">
+          </div>
+          <div class="form-group">
+            <label>Teléfono / Celular (9 dígitos):</label>
+            <input type="tel" id="ship-phone" required maxlength="9" placeholder="999888777">
+          </div>
+          <div class="form-group">
+            <label>Distrito (Lima):</label>
+            <select id="ship-district">
+              <option value="Los Olivos">Los Olivos</option>
+              <option value="San Martín de Porres">San Martín de Porres</option>
+              <option value="Independencia">Independencia</option>
+              <option value="Miraflores">Miraflores</option>
+              <option value="San Isidro">San Isidro</option>
+              <option value="Santiago de Surco">Santiago de Surco</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Dirección Exacta:</label>
+            <input type="text" id="ship-address" required placeholder="Av. / Calle / Mz. Lt.">
+          </div>
+        </div>
+      </section>
+
+      <!-- Paso 3: Pasarela de Pago -->
+      <section class="square-panel">
+        <div class="panel-title-bar dark-bar">
+          <h3>3. MÉTODO DE PAGO SEGURO (CIFRADO PCI-DSS)</h3>
+        </div>
+        <div class="panel-body">
+          <div class="payment-methods-tabs">
+            <label class="pay-option">
+              <input type="radio" name="payment_method" value="card" checked> Tarjeta de Crédito / Débito / CMR
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="payment_method" value="yape"> Billetera Digital (Yape / Plin)
+            </label>
+            <label class="pay-option">
+              <input type="radio" name="payment_method" value="cash"> Pago Contra Entrega (POS / Efectivo)
+            </label>
+          </div>
+
+          <!-- Formulario Tarjeta -->
+          <div id="method-card-box" class="payment-details-box">
+            <div class="checkout-form-grid">
+              <div class="form-group full-col">
+                <label>Número de Tarjeta (Validación Luhn - Ej: 4532 0151 1283 0366):</label>
+                <input type="text" id="card-number" maxlength="19" autocomplete="off" placeholder="4532 0151 1283 0366">
+              </div>
+              <div class="form-group">
+                <label>Titular de la Tarjeta:</label>
+                <input type="text" id="card-holder" autocomplete="off" placeholder="COMO FIGURA EN LA TARJETA">
+              </div>
+              <div class="form-group">
+                <label>Vencimiento (MM/AA) y CVV:</label>
+                <div class="inline-two">
+                  <input type="text" id="card-exp" maxlength="5" autocomplete="off" placeholder="12/28">
+                  <input type="password" id="card-cvv" maxlength="3" autocomplete="off" placeholder="CVV">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulario Yape / Plin -->
+          <div id="method-yape-box" class="payment-details-box hidden">
+            <p><strong>Escanea o transfiere al número oficial:</strong> <code>987-654-321</code> (TOTTUS PERÚ S.A.)</p>
+            <div class="form-group mt-10">
+              <label>Ingresa el código de aprobación (6 dígitos):</label>
+              <input type="text" id="yape-code" maxlength="6" autocomplete="off" placeholder="Ej. 482910">
+            </div>
+          </div>
+
+          <!-- Formulario Contra Entrega -->
+          <div id="method-cash-box" class="payment-details-box hidden">
+            <p>El repartidor llevará un terminal POS inalámbrico o vuelto exacto al momento de entregar tu pedido.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- COLUMNA DERECHA: Resumen de Orden -->
+    <aside class="checkout-right">
+      <section class="square-panel">
+        <div class="panel-title-bar">
+          <h3>RESUMEN DE COMPRA</h3>
+        </div>
+        <div class="panel-body">
+          <div class="summary-line">
+            <span>Subtotal Productos:</span>
+            <strong id="summary-subtotal">S/ 0.00</strong>
+          </div>
+          <div class="summary-line">
+            <span>Costo de Envío:</span>
+            <strong id="summary-shipping">S/ 0.00</strong>
+          </div>
+          <div class="summary-note" id="shipping-hint"></div>
+          <div class="summary-total">
+            <span>TOTAL A PAGAR:</span>
+            <strong id="summary-total">S/ 0.00</strong>
+          </div>
+
+          <p id="checkout-error" class="error-text"></p>
+          <button type="button" id="confirm-payment-btn" class="btn-primary-square">CONFIRMAR Y PAGAR AHORA</button>
+        </div>
+      </section>
+    </aside>
+
+  </div>
+
+  <!-- Pantalla de Boleta Electrónica (Se muestra tras pagar) -->
+  <div class="container hidden" id="receipt-container">
+    <div class="square-panel receipt-box">
+      <div class="panel-title-bar">
+        <h3>COMPROBANTE DE PAGO ELECTRÓNICO - PEDIDO CONFIRMADO</h3>
+      </div>
+      <div class="panel-body" id="receipt-content"></div>
+    </div>
+  </div>
+
+  <script src="js/security.js"></script>
+  <script src="js/store.js"></script>
+  <script src="js/checkout.js"></script>
+</body>
+</html>
